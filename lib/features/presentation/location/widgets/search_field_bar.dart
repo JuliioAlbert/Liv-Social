@@ -14,9 +14,6 @@ class SearchFieldBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    const sugerationSizeHeightSS = .02;
-    const sugerationSizeHeightS = .07;
-    const sugerationSizeHeightM = .15;
     final bloc = context.watch<LocationCubit>();
     return SizedBox(
       width: size.width,
@@ -25,6 +22,7 @@ class SearchFieldBar extends StatelessWidget {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
+            height: size.height * .9,
             decoration: const BoxDecoration(
               border: Border(bottom: BorderSide(color: Colors.grey, width: .4)),
               boxShadow: [
@@ -52,33 +50,21 @@ class SearchFieldBar extends StatelessWidget {
                   iconTheme: const IconThemeData(color: Colors.black),
                   elevation: 0,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20.0, right: 30.0),
-                  child: const _DestinationLocationField(),
-                ),
-                Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height *
-                          (bloc.placesDestinationFound.isEmpty
-                              ? sugerationSizeHeightSS
-                              : (bloc.placesDestinationFound.length > 1
-                                  ? sugerationSizeHeightM
-                                  : sugerationSizeHeightS)),
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ListView(
-                        children: [
-                          ...bloc.placesDestinationFound.map(
-                            (place) => _SugerationPlace(
-                                place: place,
-                                onTap: () => Navigator.of(context).pop(place)),
-                          ),
-                        ],
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 20.0, right: 30.0),
+                        child: const _DestinationLocationField(),
                       ),
-                    ),
-                    const _PickInMapOption()
-                  ],
+                      ...bloc.placesDestinationFound.map(
+                        (place) => _SugerationPlace(
+                            place: place,
+                            onTap: () => Navigator.of(context).pop(place)),
+                      ),
+                      const _PickInMapOption(),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -106,7 +92,7 @@ class _SugerationPlace extends StatelessWidget {
         onTap: () => onTap(),
         child: Container(
           width: double.infinity,
-          height: 50,
+          height: 40,
           padding: const EdgeInsets.only(
               left: 8.0, top: 5.0, bottom: 3.0, right: 8.0),
           decoration: const BoxDecoration(

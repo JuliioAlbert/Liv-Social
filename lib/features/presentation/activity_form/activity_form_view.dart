@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liv_social/core/navigation/routes.dart';
 import 'package:liv_social/features/presentation/activity_form/activity_form_cubit.dart';
 
 class ActivityFormView extends StatelessWidget {
@@ -19,9 +20,17 @@ class ActivityFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          color: Colors.transparent,
-          child: const Text('ActivityForm'),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.transparent,
+              child: const Text('ActivityForm'),
+            ),
+            ElevatedButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(Routes.location),
+                child: const Text('Location'))
+          ],
         ),
       ),
     );

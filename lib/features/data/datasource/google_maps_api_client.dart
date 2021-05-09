@@ -45,7 +45,7 @@ class GoogleMapsApiClient {
       },
     );
 
-    print('Flutter GET Response: \n${jsonEncode(response)}');
+    print('Flutter GET Response: \n${jsonDecode(response.body)}');
 
     return jsonDecode(response.body);
   }

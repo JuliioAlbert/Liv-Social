@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:liv_social/features/domain/repositories/image_picker_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImagePickerImpl extends ImagePickerRepository {
+class ImagePickerRepositoryImpl extends ImagePickerRepository {
   @override
   Future<File?> pickImage() async {
     final picker = ImagePicker();
