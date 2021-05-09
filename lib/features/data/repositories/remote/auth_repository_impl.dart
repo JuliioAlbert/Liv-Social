@@ -13,40 +13,27 @@ class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  bool isLoggedIn = false;
-  UserModel? user;
-  String idToken = '';
-
   late StreamSubscription userModelSubscription;
 
   User? get currentFirebaseUser => _auth.currentUser;
 
   @override
   Future<void> logout() async {
-    if (isLoggedIn) {
-      try {
-        await Future.wait([
-          _auth.signOut(),
-          _googleSignIn.signOut(),
-        ]);
-        idToken = '';
-      } on Exception {
-        throw LogOutFailure();
-      }
+    try {
+      await Future.wait([
+        _auth.signOut(),
+        _googleSignIn.signOut(),
+      ]);
+    } on Exception {
+      throw LogOutFailure();
     }
-
-    isLoggedIn = false;
-    user = null;
-    idToken = '';
   }
 
   @override
   Future<UserModel> signIn(AuthType authType,
       {String? email, String? password}) async {
-    isLoggedIn = false;
     UserCredential? userCredential;
-    user = UserModel();
-    idToken = '';
+    final user = UserModel();
 
     if (authType == AuthType.Email) {
       try {
@@ -75,20 +62,16 @@ class AuthRepositoryImpl implements AuthRepository {
     }
 
     if (userCredential != null) {
-      idToken = await userCredential.user!.getIdToken();
-
       await _databaseReference.collection('login').add({
         'email': userCredential.user!.providerData.first.email,
         'datetime': Timestamp.now(),
       });
-      user?.name = userCredential.user!.providerData.first.displayName!;
-      user?.email = userCredential.user!.providerData.first.email ?? '';
-      user?.image = userCredential.user!.providerData.first.photoURL;
-      user?.uid = userCredential.user!.uid;
+      user.name = userCredential.user!.providerData.first.displayName!;
+      user.email = userCredential.user!.providerData.first.email ?? '';
+      user.image = userCredential.user!.providerData.first.photoURL;
+      user.uid = userCredential.user!.uid;
 
-      isLoggedIn = true;
-
-      return user!;
+      return user;
     } else {
       throw LogInWithEmailAndPasswordFailure();
     }
@@ -112,9 +95,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<UserModel> getAuthUser() async {
-    if (currentFirebaseUser != null && user != null) {
-      return user!;
+  Future<User> getAuthUser() async {
+    if (currentFirebaseUser != null) {
+      return currentFirebaseUser!;
     } else {
       throw NotAuthException();
     }

@@ -65,3 +65,5 @@ flutter:
   assets:
     - assets/i18n/
     - assets/icons/login/
+    - assets/icons/home/
+    - assets/icons/general/

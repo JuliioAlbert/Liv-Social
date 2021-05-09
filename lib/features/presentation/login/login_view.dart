@@ -11,6 +11,7 @@ import 'package:liv_social/core/theme/pallete_color.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liv_social/features/data/models/auth_type.dart';
+import 'package:liv_social/features/presentation/common/dialogs.dart';
 import 'package:liv_social/features/presentation/login/login_cubit.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class LoginView extends StatelessWidget {
 
   static Widget create(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(context.read(), context.read()),
+      create: (context) => LoginCubit(context.read()),
       child: const LoginView(),
     );
   }
@@ -82,115 +83,131 @@ class _BodyLogin extends HookWidget {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    TextFormField(
-                      controller: emailController,
-                      inputFormatters: [LengthLimitingTextInputFormatter(50)],
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: Keys.email.localize(),
-                        labelStyle: const TextStyle(
-                            fontSize: 16.0, color: Colors.black),
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 15.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xffF0F0F0), width: 3.0),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xffF0F0F0), width: 3.0),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        filled: true,
-                      ),
-                      style:
-                          const TextStyle(fontSize: 14.0, color: Colors.black),
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) => passwordFocus.requestFocus(),
-                      onChanged: (value) => bloc.email = value,
-                    ),
-                    const SizedBox(height: 15.0),
-                    BlocBuilder<LoginCubit, LoginState>(
-                      buildWhen: (previous, current) =>
-                          current is LoginChangeObscureState,
-                      builder: (context, state) {
-                        var obscurePassword = bloc.obscurePassword;
-                        if (state is LoginChangeObscureState) {
-                          obscurePassword = state.obscureText;
-                        }
-
-                        return TextFormField(
-                          controller: passwordController,
-                          focusNode: passwordFocus,
-                          obscureText: obscurePassword,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(20)
-                          ],
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: Keys.password.localize(),
-                            labelStyle: const TextStyle(
-                                fontSize: 16.0, color: Colors.black),
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0.0, horizontal: 15.0),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xffF0F0F0), width: 3.0),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xffF0F0F0), width: 3.0),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            filled: true,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                obscurePassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () =>
-                                  bloc.updateObscureText(!obscurePassword),
-                            ),
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+                return false;
+              },
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        inputFormatters: [LengthLimitingTextInputFormatter(50)],
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: Keys.email.localize(),
+                          labelStyle: const TextStyle(
+                              fontSize: 16.0, color: Colors.black),
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 15.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color(0xffF0F0F0), width: 3.0),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).unfocus(),
-                          onChanged: (value) => bloc.password = value,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 15.0),
-                    const SizedBox(height: 20.0),
-                    FloatingActionButton(
-                      heroTag: 'btnGoogle',
-                      backgroundColor: Colors.transparent,
-                      onPressed: () => bloc.login(AuthType.Google),
-                      child: SvgPicture.asset(
-                          'assets/icons/login/ic_google.svg',
-                          fit: BoxFit.fitWidth),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const _ContinueButton(),
-                    const SizedBox(height: 20.0),
-                    const _EnrollAdvice(),
-                    const SizedBox(height: 10.0),
-                    ElevatedButton(
-                        onPressed: () => bloc.logOut(), child: Text('Logout'))
-                  ],
-                ),
-              ],
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color(0xffF0F0F0), width: 3.0),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          filled: true,
+                        ),
+                        style: const TextStyle(
+                            fontSize: 14.0, color: Colors.black),
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) => passwordFocus.requestFocus(),
+                        onChanged: (value) => bloc.email = value,
+                      ),
+                      const SizedBox(height: 15.0),
+                      BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state is LoginUserLoggedState) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                Routes.home, (route) => false);
+                          } else if (state is LoginShowLoadingState) {
+                            loading(context, Keys.loading.localize());
+                          } else if (state is LoginHideLoadingState) {
+                            Navigator.of(context).pop();
+                          } else if (state is LoginErrorState) {
+                            alertMessage(context, 'Error', 'Can not login');
+                          }
+                        },
+                        buildWhen: (previous, current) =>
+                            current is LoginChangeObscureState,
+                        builder: (context, state) {
+                          var obscurePassword = bloc.obscurePassword;
+                          if (state is LoginChangeObscureState) {
+                            obscurePassword = state.obscureText;
+                          }
+
+                          return TextFormField(
+                            controller: passwordController,
+                            focusNode: passwordFocus,
+                            obscureText: obscurePassword,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(20)
+                            ],
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              labelText: Keys.password.localize(),
+                              labelStyle: const TextStyle(
+                                  fontSize: 16.0, color: Colors.black),
+                              fillColor: Colors.white,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0.0, horizontal: 15.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color(0xffF0F0F0), width: 3.0),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color(0xffF0F0F0), width: 3.0),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              filled: true,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  obscurePassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () =>
+                                    bloc.updateObscureText(!obscurePassword),
+                              ),
+                            ),
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) =>
+                                FocusScope.of(context).unfocus(),
+                            onChanged: (value) => bloc.password = value,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 15.0),
+                      const SizedBox(height: 20.0),
+                      FloatingActionButton(
+                        heroTag: 'btnGoogle',
+                        backgroundColor: Colors.transparent,
+                        onPressed: () => bloc.login(AuthType.Google),
+                        child: SvgPicture.asset(
+                            'assets/icons/login/ic_google.svg',
+                            fit: BoxFit.fitWidth),
+                      ),
+                      const SizedBox(height: 20.0),
+                      const _ContinueButton(),
+                      const SizedBox(height: 20.0),
+                      const _EnrollAdvice(),
+                      const SizedBox(height: 10.0),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

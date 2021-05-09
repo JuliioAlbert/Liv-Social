@@ -6,6 +6,8 @@ import 'package:liv_social/app.dart';
 import 'package:liv_social/core/di/dependency_injection.dart';
 import 'package:liv_social/core/localization/localization_helper.dart';
 
+import 'core/theme/theme_cubit.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -13,7 +15,10 @@ Future<void> main() async {
   runApp(
     MultiRepositoryProvider(
       providers: DependencyInjection.build(),
-      child: LocalizedApp(delegate, const MyApp()),
+      child: BlocProvider(
+        create: (context) => ThemeCubit(),
+        child: LocalizedApp(delegate, const MyApp()),
+      ),
     ),
   );
 }

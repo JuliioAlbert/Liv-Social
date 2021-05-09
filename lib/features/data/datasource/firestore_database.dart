@@ -26,11 +26,10 @@ class FirestoreDatabase {
 
   Future<UserModel> registerUser(UserModel user) async {
     try {
-      await databaseReference.collection(collectionUser).doc(user.uid).set({
-        'name': user.name,
-        'email': user.email.toLowerCase(),
-        'image': user.image,
-      });
+      await databaseReference
+          .collection(collectionUser)
+          .doc(user.uid)
+          .set(user.toJson());
       return user;
     } catch (err, stacktrace) {
       print(stacktrace);

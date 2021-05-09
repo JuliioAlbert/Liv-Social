@@ -8,8 +8,7 @@ class UserModel {
   late String uid;
   late String email;
   late String? image;
-  late String token;
-  late String status;
+  bool status = true;
 
   UserModel();
 

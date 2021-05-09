@@ -3,17 +3,15 @@ import 'package:equatable/equatable.dart';
 
 import 'package:liv_social/core/utils/utils.dart';
 import 'package:liv_social/features/data/models/auth_type.dart';
+import 'package:liv_social/features/data/models/user_model.dart';
 import 'package:liv_social/features/domain/usecases/login_usecase.dart';
-import 'package:liv_social/features/domain/usecases/logout_usecase.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(
     this._loginUseCase,
-    this._logOutUseCase,
   ) : super(LoginInitialState());
 
   final LoginUseCase _loginUseCase;
-  final LogOutUseCase _logOutUseCase;
 
   String _email = '';
   String _password = '';
@@ -41,18 +39,23 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginChangeObscureState(obscureText: active));
   }
 
-  void login(AuthType authType) {
-    switch (authType) {
-      case AuthType.Google:
-        _loginUseCase.signIn(authType);
-        break;
-      default:
-        _loginUseCase.signIn(authType, email: _email, password: _password);
+  void login(AuthType authType) async {
+    emit(LoginShowLoadingState());
+    try {
+      UserModel userModel;
+      switch (authType) {
+        case AuthType.Google:
+          userModel = await _loginUseCase.signIn(authType);
+          break;
+        default:
+          userModel = await _loginUseCase.signIn(authType,
+              email: _email, password: _password);
+      }
+      emit(LoginHideLoadingState());
+      emit(LoginUserLoggedState(userModel));
+    } catch (e) {
+      emit(LoginErrorState());
     }
-  }
-
-  void logOut() {
-    _logOutUseCase.logout();
   }
 }
 
@@ -64,6 +67,20 @@ abstract class LoginState extends Equatable {
 }
 
 class LoginInitialState extends LoginState {}
+
+class LoginUserLoggedState extends LoginState {
+  final UserModel user;
+
+  LoginUserLoggedState(this.user);
+  @override
+  List<Object> get props => [user];
+}
+
+class LoginShowLoadingState extends LoginState {}
+
+class LoginHideLoadingState extends LoginState {}
+
+class LoginErrorState extends LoginState {}
 
 class LoginChangeObscureState extends LoginState {
   final bool obscureText;
