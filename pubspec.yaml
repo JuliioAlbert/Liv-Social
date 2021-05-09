@@ -1,0 +1,67 @@
+name: liv_social
+description: A social network app.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.0
+
+  # https://pub.dev/packages/flutter_bloc
+  flutter_bloc: ^7.0.0
+  # https://pub.dev/packages/equatable
+  equatable: ^2.0.0
+  # https://pub.dev/packages/flutter_translate
+  flutter_translate: ^3.0.1
+  # https://pub.dev/packages/flutter_translate_annotations
+  flutter_translate_annotations: ^2.0.0
+  # https://pub.dev/packages/shared_preferences
+  shared_preferences: ^2.0.5
+  # https://pub.dev/packages/cached_network_image/versions/3.0.0-nullsafety
+  cached_network_image: ^3.0.0
+  # https://pub.dev/packages/firebase_core
+  firebase_core: ^1.0.3
+  # https://pub.dev/packages/firebase_auth
+  firebase_auth: ^1.0.3
+  # https://pub.dev/packages/firebase_storage
+  firebase_storage: ^8.0.4
+  cloud_firestore: ^1.0.7
+  # https://pub.dev/packages/google_sign_in
+  google_sign_in: ^5.0.1
+  # https://pub.dev/packages/flutter_svg
+  flutter_svg: ^0.21.0+1
+  # https://pub.dev/packages/flutter_hooks
+  flutter_hooks: ^0.16.0
+  url_launcher: ^6.0.3
+  package_info: ^2.0.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # https://pub.dev/packages/bloc_test
+  bloc_test: ^8.0.0
+  mocktail: ^0.1.0
+  # https://pub.dev/packages/build_runner
+  build_runner: ^2.0.2
+  # https://pub.dev/packages/json_serializable
+  json_serializable: ^4.0.0-nullsafety.0
+  # https://pub.dev/packages/pedantic
+  pedantic: ^1.11.0
+  # https://pub.dev/packages/flutter_translate_gen
+  flutter_translate_gen: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/i18n/
+    - assets/icons/login/
