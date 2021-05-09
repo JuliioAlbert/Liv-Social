@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
@@ -20,14 +19,6 @@ class Utils {
 
   static bool isValidPasswordLength(String password) {
     return (password.trim().length > 7 && password.trim().length < 21);
-  }
-
-  static Future<PackageInfo> getPackageInfo() async {
-    return await PackageInfo.fromPlatform();
-  }
-
-  static bool isValidPhone(String phone) {
-    return RegExp(r'^[0-9]{9}$').hasMatch(phone);
   }
 
   static String getNameInitials(String name) {

@@ -4,15 +4,23 @@
 - We are using [Pedantic](https://pub.dev/packages/pedantic) to check "lints". Fix any warning or lint error before
 commit 
 
-# State management:
+# Generate Classes:
 
-- This project use [Flutter Bloc](https://pub.dev/packages/flutter_bloc) to handle state.
+- Run the script to autogenerate the classes.
+````
+ ./generateCode.sh
+````
 
-# State management:
+
+# Firebase:
 
 - This project use [Firebase](https://console.firebase.google.com/u/0/project/liv-social/overview) to manage database, remote storage and authentication.
 
 - Request the following mail guiller.dlco@gmail.com to add you to the firebase project
+
+# State management:
+
+- This project use [Flutter Bloc](https://pub.dev/packages/flutter_bloc) to handle state.
 
 #### Prefer using [Cubit](https://bloclibrary.dev/#/coreconcepts?id=cubit) over bloc:
 

@@ -216,26 +216,19 @@ class __FloatingActionButtonCustomState
   Widget build(BuildContext context) {
     return MultipleFAB(
       controller: _controller,
-      actionFirstButton: () {},
       backgroundColor: PalleteColor.actionButtonColor,
+      actionButtons: [
+        () => Navigator.of(context).pushNamed(Routes.activityForm),
+        () {}
+      ],
       icons: [
-        Tooltip(
-          message: 'Button 1', // TODO: set option helper
-          child: GestureDetector(
-            onTap: () {}, // TODO: implement function
-            child: const Icon(
-              Icons.create_new_folder,
-              color: Colors.white,
-              size: 25,
-            ),
-          ),
+        const Tooltip(
+          message: 'Create Activity', // TODO: set option helper
+          child: Icon(Icons.create_new_folder, color: Colors.white, size: 25),
         ),
-        Tooltip(
+        const Tooltip(
           message: 'Button 2', // TODO: set option helper
-          child: GestureDetector(
-            onTap: () {}, // TODO: implement function
-            child: const Icon(Icons.credit_card, color: Colors.white, size: 25),
-          ),
+          child: Icon(Icons.credit_card, color: Colors.white, size: 25),
         ),
       ],
     );

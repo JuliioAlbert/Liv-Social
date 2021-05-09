@@ -7,14 +7,14 @@ class MultipleFAB extends StatefulWidget {
     required this.icons,
     required AnimationController controller,
     required this.backgroundColor,
-    required this.actionFirstButton,
+    required this.actionButtons,
   })   : _controller = controller,
         super(key: key);
 
   final List<Widget> icons;
   final AnimationController _controller;
   final Color backgroundColor;
-  final VoidCallback actionFirstButton;
+  final List<VoidCallback> actionButtons;
 
   @override
   _MultipleFABState createState() => _MultipleFABState();
@@ -27,6 +27,7 @@ class _MultipleFABState extends State<MultipleFAB> {
       degThreeTranslationAnimation;
   late Animation rotationAnimation;
   late Animation rotationAnimationPrincipalButton;
+  late Animation scaleAnimationPrincipalButton;
 
   @override
   void initState() {
@@ -48,24 +49,27 @@ class _MultipleFABState extends State<MultipleFAB> {
     rotationAnimationPrincipalButton = Tween<double>(begin: 180.0, end: 45.0)
         .animate(CurvedAnimation(
             parent: animationController, curve: Curves.easeOut));
+    scaleAnimationPrincipalButton = Tween<double>(begin: 1.0, end: 0.85)
+        .animate(CurvedAnimation(
+            parent: animationController, curve: Curves.easeOut));
     super.initState();
     animationController.addListener(() {
       setState(() {});
     });
   }
 
-  double getRadiansFromIndex(int index, {bool is3items = false}) {
+  double getRadiansFromIndex(int index, {bool isOdd = false}) {
     final unitRadian = 57.295779513;
     double degree;
     switch (index) {
       case 0:
-        degree = is3items ? 270.0 : 247.0;
+        degree = isOdd ? 270.0 : 247.0;
         break;
       case 1:
-        degree = is3items ? 220.0 : 293.0;
+        degree = isOdd ? 220.0 : 293.0;
         break;
       case 2:
-        degree = is3items ? 320.0 : 200;
+        degree = isOdd ? 320.0 : 200;
         break;
       case 3:
         degree = 340.0;
@@ -83,11 +87,11 @@ class _MultipleFABState extends State<MultipleFAB> {
 
   @override
   Widget build(BuildContext context) {
-    final is3Widgets = widget.icons.length == 3;
+    var isOdd = widget.icons.length.isOdd;
     return Stack(
       clipBehavior: Clip.none,
-      fit: StackFit.passthrough,
-      alignment: Alignment.center,
+      fit: StackFit.loose,
+      alignment: Alignment.bottomCenter,
       children: <Widget>[
         IgnorePointer(
           ignoring: true,
@@ -95,47 +99,66 @@ class _MultipleFABState extends State<MultipleFAB> {
             // color: Colors.black.withOpacity(0.4),
             color: Colors.transparent,
             width: 130.0,
-            height: 130.0,
+            height: 140.0,
           ),
         ),
-        ...List.generate(widget.icons.length, (int index) {
-          Widget child = SizedBox(
+        ...List.generate(
+          widget.icons.length,
+          (int index) {
+            Widget child = SizedBox(
               width: 40.0,
               child: FloatingActionButton(
                 heroTag: null,
                 backgroundColor: widget.backgroundColor,
-                onPressed: () {},
-                child: widget.icons[index],
-              ));
-
-          return Transform.translate(
-            offset: Offset.fromDirection(
-                getRadiansFromIndex(index, is3items: is3Widgets),
-                degTwoTranslationAnimation.value * 60),
-            child: Transform(
-              transform: Matrix4.rotationZ(
-                  getRadiansFromDegree(rotationAnimation.value))
-                ..scale(degTwoTranslationAnimation.value),
-              alignment: Alignment.center,
-              child: child,
-            ),
-          );
-        }).toList()
-          ..add(Transform(
-            transform: Matrix4.rotationZ(
-                getRadiansFromDegree(rotationAnimationPrincipalButton.value)),
-            alignment: Alignment.center,
-            child: FloatingActionButton(
-              heroTag: null,
-              backgroundColor: PalleteColor.actionButtonColor,
-              onPressed: () {
-                if (animationController.isDismissed) {
-                  animationController.forward();
-                } else {
+                onPressed: () {
                   animationController.reverse();
-                }
-              },
-              child: const Icon(Icons.add, size: 30.0),
+                  widget.actionButtons[index]();
+                },
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  child: widget.icons[index],
+                ),
+              ),
+            );
+
+            return Positioned(
+              bottom: 35,
+              child: Transform.translate(
+                offset: Offset.fromDirection(
+                    getRadiansFromIndex(index, isOdd: isOdd),
+                    degTwoTranslationAnimation.value * 55),
+                child: Transform(
+                  transform: Matrix4.rotationZ(
+                      getRadiansFromDegree(rotationAnimation.value))
+                    ..scale(degTwoTranslationAnimation.value),
+                  alignment: Alignment.center,
+                  child: child,
+                ),
+              ),
+            );
+          },
+        ).toList()
+          ..add(Positioned(
+            bottom: 35,
+            child: Transform.scale(
+              scale: scaleAnimationPrincipalButton.value,
+              child: Transform(
+                transform: Matrix4.rotationZ(getRadiansFromDegree(
+                    rotationAnimationPrincipalButton.value)),
+                alignment: Alignment.center,
+                child: FloatingActionButton(
+                  heroTag: null,
+                  backgroundColor: PalleteColor.actionButtonColor,
+                  onPressed: () {
+                    if (animationController.isDismissed) {
+                      animationController.forward();
+                    } else {
+                      animationController.reverse();
+                    }
+                  },
+                  child: const Icon(Icons.add, size: 30.0),
+                ),
+              ),
             ),
           ))
       ],

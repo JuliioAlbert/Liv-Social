@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="21" height="21" viewBox="0, 0, 21, 21">
+  <g id="Destino">
+    <g>
+      <g>
+        <path d="M1,10.5 C1,5.253 5.253,1 10.5,1 C15.747,1 20,5.253 20,10.5 C20,15.747 15.747,20 10.5,20 C5.253,20 1,15.747 1,10.5 z" fill="#808080"/>
+        <g>
+          <path d="M14.199,7.161 L14.839,7.801 L7.801,14.839 L7.161,14.199 z" fill="#808080"/>
+          <path d="M14.199,7.161 L14.839,7.801 L7.801,14.839 L7.161,14.199 z" fill-opacity="0" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </g>
+      <g>
+        <path d="M7.801,7.161 L14.839,14.199 L14.199,14.839 L7.161,7.801 z" fill="#808080"/>
+        <path d="M7.801,7.161 L14.839,14.199 L14.199,14.839 L7.161,7.801 z" fill-opacity="0" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+</svg>
