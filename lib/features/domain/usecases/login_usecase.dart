@@ -1,7 +1,7 @@
 import 'package:liv_social/core/exceptions/account_exception.dart';
 import 'package:liv_social/core/exceptions/auth_exception.dart';
 import 'package:liv_social/features/data/models/auth_type.dart';
-import 'package:liv_social/features/data/models/user_model.dart';
+import 'package:liv_social/features/domain/entities/user_model.dart';
 import 'package:liv_social/features/domain/repositories/account_repository.dart';
 import 'package:liv_social/features/domain/repositories/auth_repository.dart';
 

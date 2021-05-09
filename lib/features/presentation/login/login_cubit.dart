@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:liv_social/core/utils/utils.dart';
 import 'package:liv_social/features/data/models/auth_type.dart';
-import 'package:liv_social/features/data/models/user_model.dart';
+import 'package:liv_social/features/domain/entities/user_model.dart';
 import 'package:liv_social/features/domain/usecases/login_usecase.dart';
 
 class LoginCubit extends Cubit<LoginState> {

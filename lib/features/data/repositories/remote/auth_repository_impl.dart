@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:liv_social/core/exceptions/auth_exception.dart';
 import 'package:liv_social/features/data/models/auth_type.dart';
-import 'package:liv_social/features/data/models/user_model.dart';
+import 'package:liv_social/features/domain/entities/user_model.dart';
 import 'package:liv_social/features/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

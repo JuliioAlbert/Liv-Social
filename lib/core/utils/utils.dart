@@ -67,4 +67,7 @@ class Utils {
     var df = DateFormat(dateFormat);
     return df.format(timestamp.toDate());
   }
+
+  static DateTime? fromTimestamp(dynamic? timestamp) =>
+      timestamp == null ? null : (timestamp as Timestamp).toDate();
 }
