@@ -75,3 +75,18 @@ class MyButton extends StatelessWidget {
 # Localizations:
 
 - This project use this [Google Sheet](https://docs.google.com/spreadsheets/d/1KN56XjcncJB0ApP7VuoS7CiME_o53UhB2OrkxRSRZ40/edit?usp=sharing) to handle text translations and autogenerate json file.
+
+
+# Screenshots
+ 
+ | | |
+|------------|-------------| 
+| <center> <img src="https://i.ibb.co/X85157n/Screenshot-2021-05-10-093535.png" width="250"></center> |  <center><img src="https://i.ibb.co/68PnX3H/Screenshot-2021-05-10-093520.png" width="250"> </center>|
+| <center> <img src="https://i.ibb.co/gVvPvSX/Screenshot-2021-05-10-093504.png" width="250"></center> |  <center><img src="https://i.ibb.co/NCJc1tV/Screenshot-2021-05-10-093420.png" width="250"> </center>|
+| <center> <img src="https://i.ibb.co/nDvH9BY/Screenshot-2021-05-10-093443.png" width="250"></center> |  <center><img src="https://i.ibb.co/pP23DMr/Screenshot-2021-05-10-093453.png" width="250"> </center>|
+| <center> <img src="https://i.ibb.co/ZgGp8FF/Screenshot-2021-05-10-093651.png" width="250"></center> |  
+
+
+# Tests
+
+ - Pending
