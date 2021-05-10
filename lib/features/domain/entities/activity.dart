@@ -14,7 +14,7 @@ class Activity {
   late String details;
   String? image;
   bool status = true;
-  @JsonKey(fromJson: Utils.fromTimestamp)
+  @JsonKey(fromJson: Utils.fromDateFormat)
   late DateTime? expectedDate;
   LocationPlace locationPlace;
 

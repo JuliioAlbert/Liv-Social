@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
+  static DateFormat dateFormat = DateFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
   static bool isNullOrEmpty(String? value) {
     if (value == null || value.trim().isEmpty) {
       return true;
@@ -59,6 +60,6 @@ class Utils {
     return df.format(timestamp.toDate());
   }
 
-  static DateTime? fromTimestamp(dynamic? timestamp) =>
-      timestamp == null ? null : (timestamp as Timestamp).toDate();
+  static DateTime? fromDateFormat(dynamic date) =>
+      date == null ? null : dateFormat.parse(date as String);
 }
