@@ -61,7 +61,7 @@ class _ActivityFormBody extends StatelessWidget {
           } else if (state is ActivityFormShowLoadingState) {
             loading(context, Keys.loading.localize());
           } else if (state is ActivityFormHideLoadingState) {
-            Navigator.of(context);
+            Navigator.of(context).pop();
           } else if (state is ActivityFormRegisterSuccessState) {
             Navigator.of(context).pop(true);
           }

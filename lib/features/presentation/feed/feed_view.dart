@@ -13,7 +13,10 @@ class FeedView extends StatelessWidget {
 
   static Widget create(BuildContext context) {
     return BlocProvider(
-      create: (context) => FeedCubit(context.read())..getFeedActivities(),
+      create: (context) => FeedCubit(
+        context.read(),
+        context.read(),
+      )..getFeedActivities(),
       child: const FeedView(),
     );
   }

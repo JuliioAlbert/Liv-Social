@@ -1,15 +1,29 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:liv_social/features/domain/entities/activity.dart';
 
+import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/domain/usecases/get_activities_usecase.dart';
+import 'package:liv_social/features/presentation/home/home_cubit.dart';
 
 class FeedCubit extends Cubit<FeedState> {
   FeedCubit(
+    this.homeCubit,
     this._getActiviesUseCase,
-  ) : super(FeedInitialState());
+  ) : super(FeedInitialState()) {
+    homeSubscription = homeCubit.stream.listen((state) {
+      if (state is HomeReloadFeedState) {
+        emit(FeedInitialState());
+        getFeedActivities();
+      }
+    });
+  }
+
+  final HomeCubit homeCubit;
 
   final GetActiviesUseCase _getActiviesUseCase;
+  StreamSubscription? homeSubscription;
 
   List<Activity>? activities;
 

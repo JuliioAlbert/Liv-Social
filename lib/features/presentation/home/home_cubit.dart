@@ -16,6 +16,9 @@ class HomeCubit extends Cubit<HomeState> {
   final LogOutUseCase _logOutUseCase;
 
   void changePage(IndexPage page) {
+    if (page == IndexPage.feed) {
+      emit(HomeReloadFeedState(page));
+    }
     emit(HomeState(page));
   }
 
@@ -25,7 +28,8 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void reloadFeed() {
-    // TODO: implement
+    emit(HomeState(state.page));
+    emit(HomeReloadFeedState(state.page));
   }
 }
 
@@ -40,6 +44,15 @@ class HomeState extends Equatable {
 
 class HomeLogoutState extends HomeState {
   HomeLogoutState(IndexPage page) : super(page);
+
+  @override
+  List<Object> get props => [page];
+}
+
+class HomeReloadFeedState extends HomeState {
+  HomeReloadFeedState(
+    IndexPage page,
+  ) : super(page);
 
   @override
   List<Object> get props => [page];

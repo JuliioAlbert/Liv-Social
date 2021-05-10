@@ -61,6 +61,7 @@ class ActivityFormCubit extends Cubit<ActivityFormState> {
         emit(ActivityFormHideLoadingState());
         emit(ActivityFormRegisterSuccessState());
       } catch (e) {
+        emit(ActivityFormHideLoadingState());
         emit(ActivityFormRegisterErrorState());
       }
     }
