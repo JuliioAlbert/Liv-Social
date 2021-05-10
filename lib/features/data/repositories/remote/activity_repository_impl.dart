@@ -21,7 +21,7 @@ class ActivityRepositoryImpl extends ActivityRepository {
       var imageURL = '';
       if (image != null) {
         imageURL = await _cloudStorageRepository.uploadFile(
-            image, 'activity/${activity.ownerId}');
+            image, 'activity/${activity.uid}');
       }
       if (imageURL.isNotEmpty) {
         activity.image = imageURL;
