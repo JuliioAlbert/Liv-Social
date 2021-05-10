@@ -4,10 +4,12 @@ import 'package:liv_social/core/exceptions/activity_exception.dart';
 import 'package:liv_social/features/data/datasource/firestore_helper.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/domain/entities/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class FirestoreDatabase {
   final databaseReference = FirebaseFirestore.instance;
   final _fHelper = FirestoreHelper.instance;
+  final uuid = const Uuid();
 
   final String _userCollection = 'user';
   final String _activityCollection = 'activity';
@@ -71,6 +73,7 @@ class FirestoreDatabase {
   }
 
   Future<Activity> createActivity(Activity activity) async {
+    activity.uid = uuid.v4();
     await databaseReference
         .collection(_activityCollection)
         .doc(activity.uid)

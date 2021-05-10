@@ -1,16 +1,28 @@
+import 'dart:io';
+
 import 'package:liv_social/core/exceptions/activity_exception.dart';
 import 'package:liv_social/features/data/datasource/firestore_database.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/domain/repositories/activity_repository.dart';
+import 'package:liv_social/features/domain/repositories/cloud_storage_repository.dart';
 
 class ActivityRepositoryImpl extends ActivityRepository {
   final FirestoreDatabase _firestoreDatabase;
+  final CloudStorageRepository _cloudStorageRepository;
 
-  ActivityRepositoryImpl(this._firestoreDatabase);
+  ActivityRepositoryImpl(this._firestoreDatabase, this._cloudStorageRepository);
 
   @override
-  Future<Activity> createActivity(Activity activity) async {
+  Future<Activity> createActivity(Activity activity, File? image) async {
     try {
+      var imageURL = '';
+      if (image != null) {
+        imageURL = await _cloudStorageRepository.uploadFile(
+            image, 'users/${activity.ownerId}');
+      }
+      if (imageURL.isNotEmpty) {
+        activity.image = imageURL;
+      }
       return await _firestoreDatabase.createActivity(activity);
     } catch (e) {
       throw CreateActivityFailure();

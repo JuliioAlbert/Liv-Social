@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
@@ -16,7 +18,7 @@ class ActivityDetailCubit extends Cubit<ActivityDetailState> {
   String title = '';
   String subtitle = '';
   String details = '';
-  List<String> images = [];
+  File? image;
   DateTime? expectedDate;
   LocationPlace? locationPlace;
 
@@ -34,11 +36,10 @@ class ActivityDetailCubit extends Cubit<ActivityDetailState> {
         activity.title = title;
         activity.subtitle = subtitle;
         activity.details = details;
-        activity.images = images;
         activity.expectedDate = expectedDate;
         activity.locationPlace = locationPlace!;
 
-        await _manageActivityUseCase.createActivity(activity);
+        await _manageActivityUseCase.createActivity(activity, image);
         emit(ActivityDetailHideLoadingState());
         emit(ActivityDetailShowLoadingState());
       } catch (e) {

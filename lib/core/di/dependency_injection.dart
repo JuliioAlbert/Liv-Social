@@ -33,9 +33,6 @@ class DependencyInjection {
       RepositoryProvider<AccountRepository>(
         create: (_) => AccountRepositoryImpl(fireStoreDatabase),
       ),
-      RepositoryProvider<ActivityRepository>(
-        create: (_) => ActivityRepositoryImpl(fireStoreDatabase),
-      ),
       RepositoryProvider<LocationRepository>(
         create: (_) => LocationRepositoryImpl(googleMapsApiClient),
       ),
@@ -44,6 +41,10 @@ class DependencyInjection {
       ),
       RepositoryProvider<CloudStorageRepository>(
         create: (_) => CloudStorageRepositoryImpl(),
+      ),
+      RepositoryProvider<ActivityRepository>(
+        create: (context) =>
+            ActivityRepositoryImpl(fireStoreDatabase, context.read()),
       ),
       RepositoryProvider<LogOutUseCase>(
         create: (context) => LogOutUseCase(

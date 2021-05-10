@@ -1,4 +1,3 @@
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:liv_social/features/data/models/place.dart';
 import 'package:liv_social/features/domain/repositories/location_repository.dart';

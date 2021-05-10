@@ -17,7 +17,7 @@ class LoginUseCase {
   Future<bool> validateSession() async {
     try {
       final userAuth = await _authRepository.getAuthUser();
-      await _accountRepository.findUserById(userAuth.uid);
+      user = await _accountRepository.findUserById(userAuth.uid);
       isLoggedIn = true;
     } on NotAuthException {
       return false;

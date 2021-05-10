@@ -23,6 +23,10 @@ class HomeCubit extends Cubit<HomeState> {
     _logOutUseCase.logout();
     emit(HomeLogoutState(state.page));
   }
+
+  void reloadFeed() {
+    // TODO: implement
+  }
 }
 
 class HomeState extends Equatable {

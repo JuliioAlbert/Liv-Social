@@ -4,19 +4,19 @@ import 'package:liv_social/core/utils/utils.dart';
 
 part 'activity.g.dart';
 
-@JsonSerializable(anyMap: true)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class Activity {
-  late String uid;
+  String? uid;
   late String ownerId;
   late String ownerName;
   late String title;
   late String subtitle;
   late String details;
-  late List<String>? images;
+  String? image;
   bool status = true;
   @JsonKey(fromJson: Utils.fromTimestamp)
   late DateTime? expectedDate;
-  late LocationPlace locationPlace;
+  LocationPlace locationPlace;
 
   Activity(
     this.ownerId,
@@ -24,7 +24,6 @@ class Activity {
     this.title,
     this.subtitle,
     this.details,
-    this.images,
     this.expectedDate,
     this.locationPlace,
   );
@@ -35,14 +34,19 @@ class Activity {
   Map<String, dynamic> toJson() => _$ActivityToJson(this);
 }
 
-@JsonSerializable(anyMap: true)
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class LocationPlace {
-  late String? name;
+  String? name;
   late String address;
   late double latitude;
   late double longitude;
 
-  LocationPlace();
+  LocationPlace(
+    this.name,
+    this.address,
+    this.latitude,
+    this.longitude,
+  );
 
   factory LocationPlace.fromJson(Map<String, dynamic> json) =>
       _$LocationPlaceFromJson(json);

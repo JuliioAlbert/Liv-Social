@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:liv_social/features/presentation/common/spin_loading_indicator.dart';
 import 'package:liv_social/features/presentation/location/location_cubit.dart';
+import 'package:liv_social/features/presentation/location/widgets/manual_pick_in_map.dart';
 import 'package:liv_social/features/presentation/location/widgets/search_field_bar.dart';
 
 class LocationView extends StatelessWidget {
@@ -32,7 +33,9 @@ class _HomeMap extends StatelessWidget {
 
     return BlocConsumer<LocationCubit, LocationState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is LocationConfirmManualPick) {
+          Navigator.of(context).pop(state.place);
+        }
       },
       builder: (context, state) {
         return bloc.centralLocation != null
@@ -53,9 +56,11 @@ class _HomeMap extends StatelessWidget {
                       },
                     ),
                   ),
-                  const Positioned(
+                  Positioned(
                     top: 0,
-                    child: SearchFieldBar(),
+                    child: !bloc.showManualPick
+                        ? const SearchFieldBar()
+                        : const ManualPickInMap(),
                   ),
                 ],
               )

@@ -214,11 +214,14 @@ class __FloatingActionButtonCustomState
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<HomeCubit>();
     return MultipleFAB(
       controller: _controller,
       backgroundColor: PalleteColor.actionButtonColor,
       actionButtons: [
-        () => Navigator.of(context).pushNamed(Routes.activityForm),
+        () => Navigator.of(context)
+            .pushNamed(Routes.activityForm)
+            .then((value) => bloc.reloadFeed()),
         () {}
       ],
       icons: [

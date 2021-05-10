@@ -39,7 +39,7 @@ class SearchFieldBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppBar(
-                  title: const Text('Location', // TODO: translate
+                  title: const Text('Where', // TODO: translate
                       style: TextStyle(color: Colors.black)),
                   centerTitle: true,
                   leading: IconButton(
@@ -210,7 +210,7 @@ class _DestinationLocationField extends HookWidget {
                   ),
                   contentPadding: const EdgeInsets.all(0),
                   alignLabelWithHint: true,
-                  hintText: 'Location', //TODO: translate
+                  hintText: 'Find a place', //TODO: translate
                   isDense: true,
                   hintStyle:
                       const TextStyle(color: Color(0xff545253), fontSize: 14),

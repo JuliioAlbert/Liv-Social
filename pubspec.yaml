@@ -46,6 +46,8 @@ dependencies:
   geolocator: ^7.0.3
   # https://pub.dev/packages/http
   http: ^0.13.3
+  # https://pub.dev/packages/uuid/install
+  uuid: ^3.0.4
 
 
 dev_dependencies:
