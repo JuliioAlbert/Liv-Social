@@ -49,8 +49,8 @@ class _ActivityFormBody extends StatelessWidget {
           if (state is ActivityFormExitRequestState) {
             confirmation(
               context,
-              'Exit',
-              'You will lose your changes, are you sure to exit?', // TODO: translate
+              Keys.leave.localize(),
+              Keys.alert_lose_changes.localize(),
               Keys.cancel.localize(),
               Keys.accept.localize(),
               () {
@@ -98,8 +98,7 @@ class _ActivityFormBody extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: ElevatedButton(
                           onPressed: () => bloc.createActivity(),
-                          child:
-                              const Text('Create Activity')), // TODO: translate
+                          child: Text(Keys.create_activity.localize())),
                     ),
                   ],
                 ),
@@ -234,12 +233,12 @@ class _WhenField extends StatelessWidget {
       builder: (context, state) {
         return Row(
           children: [
-            const Expanded(
+            Expanded(
               flex: 1,
               child: Center(
                 child: Text(
-                  'When:', // TODO: translate
-                  style: TextStyle(
+                  '${Keys.when.localize()}:',
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w700),
                 ),
               ),
@@ -276,7 +275,7 @@ class _WhenField extends StatelessWidget {
                     child: Container(
                       color: Colors.transparent,
                       child: Text(
-                        '${bloc.expectedDate != null ? bloc.expectedDate!.formatyyyyMMddHHmm() : 'Without date'}', // TODO: translate
+                        '${bloc.expectedDate != null ? bloc.expectedDate!.formatyyyyMMddHHmm() : Keys.without_date.localize()}',
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                       ),
@@ -304,12 +303,12 @@ class _LocationField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Where:', // TODO: translate
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+              '${Keys.where.localize()}:',
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w700),
             ),
           ),
           Row(
@@ -327,11 +326,11 @@ class _LocationField extends StatelessWidget {
                           ),
                         ],
                       )
-                    : const Text(
-                        'Select a location',
-                        style: TextStyle(
+                    : Text(
+                        Keys.select_a_location.localize(),
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
-                      ), //TODO: translate
+                      ),
               ),
               Expanded(
                 flex: 1,

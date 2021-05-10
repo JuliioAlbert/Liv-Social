@@ -43,13 +43,12 @@ class HomeView extends StatelessWidget {
       child: SafeArea(
         child: WillPopScope(
           onWillPop: () async {
-            // TODO: translates
             await confirmation(
               context,
-              'Logout?',
-              'Are you sure to exit?',
+              Keys.logout_question.localize(),
+              '',
               Keys.cancel.localize(),
-              'Yes',
+              Keys.yes.localize(),
               () => homeBloc.logout(),
             );
             return false;
@@ -225,13 +224,14 @@ class __FloatingActionButtonCustomState
         () {}
       ],
       icons: [
-        const Tooltip(
-          message: 'Create Activity', // TODO: set option helper
-          child: Icon(Icons.create_new_folder, color: Colors.white, size: 25),
+        Tooltip(
+          message: Keys.create_activity.localize(),
+          child: const Icon(Icons.create_new_folder,
+              color: Colors.white, size: 25),
         ),
         const Tooltip(
           message: 'Button 2', // TODO: set option helper
-          child: Icon(Icons.credit_card, color: Colors.white, size: 25),
+          child: Icon(Icons.more_horiz_outlined, color: Colors.white, size: 25),
         ),
       ],
     );

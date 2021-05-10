@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liv_social/core/localization/keys.dart';
 import 'package:liv_social/features/presentation/profile/profile_cubit.dart';
+import 'package:liv_social/core/extension/string_extension.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class ProfileView extends StatelessWidget {
     return Container(
       child: ElevatedButton(
         onPressed: () => bloc.logout(),
-        child: const Text('Logout'), // TODO: translate
+        child: Text(Keys.logout.localize()),
       ),
     );
   }

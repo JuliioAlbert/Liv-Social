@@ -63,12 +63,6 @@ class FirestoreDatabase {
     return _fHelper.collection<Activity>(
       path: _activityCollection,
       builder: (data) => Activity.fromJson(data),
-      queryBuilder: (query) => query
-          .where(
-            'status',
-            isEqualTo: 1,
-          )
-          .orderBy('expectedDate', descending: false),
     );
   }
 

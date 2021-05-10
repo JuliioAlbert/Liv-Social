@@ -23,5 +23,19 @@
 	"instructions_reset_password": "Please follow the instructions sent to your email to reset your password",
 	"email_not_registered": "The email address entered is not registered",
 	"you_need_to_authorize_the_gps_to_use_the_app": "You need to authorize the GPS to use the app",
-	"request_access": "Request Access"
+	"request_access": "Request Access",
+	"alert_lose_changes": "You will lose your changes, are you sure to leave?",
+	"leave": "Leave",
+	"create_activity": "Create Activity",
+	"when": "When?",
+	"without_date": "Without date",
+	"where": "Where",
+	"select_a_location": "Select a location",
+	"logout_question": "Logout?",
+	"yes": "Yes",
+	"location": "Location",
+	"confirm": "Confirm",
+	"set_on_map": "Set on map",
+	"find_an_address": "Find an address",
+	"logout": "Logout"
 }

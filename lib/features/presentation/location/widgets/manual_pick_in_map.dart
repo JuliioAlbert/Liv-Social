@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:liv_social/core/localization/keys.dart';
 import 'package:liv_social/features/presentation/location/location_cubit.dart';
+import 'package:liv_social/core/extension/string_extension.dart';
 import 'package:provider/provider.dart';
 
 class ManualPickInMap extends StatelessWidget {
@@ -55,9 +57,9 @@ class ManualPickInMap extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.black),
-                        child: const Text('Location', //TODO: translate
+                        child: Text(Keys.location.localize(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500)))),
                 SvgPicture.asset('assets/icons/location/move_in_map.svg',
@@ -78,9 +80,9 @@ class ManualPickInMap extends StatelessWidget {
                       vertical: 8.0, horizontal: 40.0),
                   child: ElevatedButton(
                     onPressed: () => bloc.confirmManualPick(),
-                    child: const Text(
-                      'Confirm', //TODO: translate
-                      style: TextStyle(fontSize: 16),
+                    child: Text(
+                      Keys.confirm.localize(),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ),

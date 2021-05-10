@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:liv_social/core/localization/keys.dart';
 import 'package:liv_social/features/data/models/place.dart';
 import 'package:liv_social/features/presentation/location/location_cubit.dart';
+import 'package:liv_social/core/extension/string_extension.dart';
 import 'package:provider/provider.dart';
 
 class SearchFieldBar extends StatelessWidget {
@@ -39,8 +40,8 @@ class SearchFieldBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppBar(
-                  title: const Text('Where', // TODO: translate
-                      style: TextStyle(color: Colors.black)),
+                  title: Text(Keys.where.localize(),
+                      style: const TextStyle(color: Colors.black)),
                   centerTitle: true,
                   leading: IconButton(
                     onPressed: () => Navigator.of(context).pop(),
@@ -162,8 +163,8 @@ class _PickInMapOption extends StatelessWidget {
                     height: 25.0),
               ),
               const SizedBox(width: 10.0),
-              const Text('Set on map', // TODO: translate
-                  style: TextStyle(fontWeight: FontWeight.w500)),
+              Text(Keys.set_on_map.localize(),
+                  style: const TextStyle(fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -210,7 +211,7 @@ class _DestinationLocationField extends HookWidget {
                   ),
                   contentPadding: const EdgeInsets.all(0),
                   alignLabelWithHint: true,
-                  hintText: 'Find a place', //TODO: translate
+                  hintText: Keys.find_an_address.localize(),
                   isDense: true,
                   hintStyle:
                       const TextStyle(color: Color(0xff545253), fontSize: 14),

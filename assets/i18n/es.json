@@ -23,5 +23,19 @@
 	"instructions_reset_password": "Por favor siga las instrucciones que se le envio a su correo electrónico para restablecer su contraseña",
 	"email_not_registered": "La dirección de correo electrónico ingresada no se encuentra registrada",
 	"you_need_to_authorize_the_gps_to_use_the_app": "Se necesita autorizar el GPS para utilizar el app",
-	"request_access": "Solicitar Acceso"
+	"request_access": "Solicitar Acceso",
+	"alert_lose_changes": "Perderás tus cambios, ¿estás seguro de salir?",
+	"leave": "Salir",
+	"create_activity": "Crear Actividad",
+	"when": "¿Cuándo?",
+	"without_date": "Sin fecha",
+	"where": "Donde",
+	"select_a_location": "Selecciona una ubicación",
+	"logout_question": "¿Cerrar sesión?",
+	"yes": "Sí",
+	"location": "Ubicación",
+	"confirm": "Confirmar",
+	"set_on_map": "Establecer en el mapa",
+	"find_an_address": "Encuentra una dirección",
+	"logout": "Cerrar sesión"
 }
