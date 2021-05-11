@@ -68,14 +68,22 @@ class _ActivityCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff833ab4),
-                      Color(0xfffd1d1d),
-                      Color(0xfffcb045),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    stops: [0, .35, 1]),
+                  colors: [
+                    Color(0xff833ab4),
+                    Color(0xfffd1d1d),
+                    Color(0xfffcb045),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0, .35, 1],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.6),
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                  )
+                ],
                 image: activity.image != null
                     ? DecorationImage(
                         image: NetworkImage(activity.image!),
@@ -90,7 +98,7 @@ class _ActivityCard extends StatelessWidget {
                     spreadRadius: 5,
                     blurRadius: 10,
                     fontSize: 26,
-                    color: Colors.white,
+                    shadowColor: Colors.blueAccent,
                   ),
                   const Spacer(),
                   _FieldActivity(
@@ -98,14 +106,14 @@ class _ActivityCard extends StatelessWidget {
                     spreadRadius: 0,
                     blurRadius: 5,
                     fontSize: 15,
-                    color: Colors.transparent,
+                    shadowColor: Colors.white,
                   ),
                   _FieldActivity(
                     value: activity.expectedDate!.formatyyyyMMddHHmm(),
                     spreadRadius: 0,
                     blurRadius: 2,
                     fontSize: 10,
-                    color: Colors.transparent,
+                    shadowColor: Colors.white,
                   ),
                 ],
               ),
@@ -124,28 +132,28 @@ class _FieldActivity extends StatelessWidget {
     required this.fontSize,
     required this.spreadRadius,
     required this.blurRadius,
-    required this.color,
+    required this.shadowColor,
   }) : super(key: key);
 
   final String value;
   final double fontSize;
   final double spreadRadius;
   final double blurRadius;
-  final Color color;
+  final Color shadowColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white,
-              spreadRadius: spreadRadius,
-              blurRadius: blurRadius,
-            )
-          ]),
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor,
+            spreadRadius: spreadRadius,
+            blurRadius: blurRadius,
+          ),
+        ],
+      ),
       child: Text(
         value,
         style: TextStyle(

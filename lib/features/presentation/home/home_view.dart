@@ -219,7 +219,7 @@ class __FloatingActionButtonCustomState
       backgroundColor: PalleteColor.actionButtonColor,
       actionButtons: [
         () => Navigator.of(context)
-            .pushNamed(Routes.activityForm)
+            .pushNamed(Routes.activityCreate)
             .then((value) => bloc.reloadFeed()),
         () {}
       ],

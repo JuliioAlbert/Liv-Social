@@ -2,49 +2,25 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:liv_social/features/domain/entities/activity.dart';
 
-import 'package:liv_social/features/domain/usecases/manage_activity_usecase.dart';
+import 'package:liv_social/features/domain/entities/activity.dart';
+import 'package:liv_social/features/domain/usecases/login_usecase.dart';
+import 'package:liv_social/features/presentation/home/home_cubit.dart';
 
 class ActivityDetailCubit extends Cubit<ActivityDetailState> {
-  ActivityDetailCubit(
-    this._manageActivityUseCase,
-    this.activity,
-  ) : super(ActivityDetailInitialState());
+  ActivityDetailCubit(this.activity, this._loginUseCase, this._homeCubit)
+      : super(ActivityDetailInitialState());
 
-  final ManageActivityUseCase _manageActivityUseCase;
   Activity activity;
+  final LoginUseCase _loginUseCase;
+  final HomeCubit _homeCubit;
 
-  String title = '';
-  String subtitle = '';
-  String details = '';
-  File? image;
-  DateTime? expectedDate;
-  LocationPlace? locationPlace;
+  bool get isOwner => _loginUseCase.user!.uid == activity.ownerId;
 
-  bool isFieldsValid() =>
-      title.isNotEmpty &&
-      subtitle.isNotEmpty &&
-      details.isNotEmpty &&
-      expectedDate != null &&
-      locationPlace != null;
-
-  void updateActivity() async {
-    if (isFieldsValid()) {
-      emit(ActivityDetailShowLoadingState());
-      try {
-        activity.title = title;
-        activity.subtitle = subtitle;
-        activity.details = details;
-        activity.expectedDate = expectedDate;
-        activity.locationPlace = locationPlace!;
-
-        await _manageActivityUseCase.createActivity(activity, image);
-        emit(ActivityDetailHideLoadingState());
-        emit(ActivityDetailShowLoadingState());
-      } catch (e) {
-        emit(ActivityDetailRegisterErrorState());
-      }
+  void processUpdate(Object? activity) {
+    if (activity != null && activity is Activity) {
+      _homeCubit.reloadFeed();
+      emit(ActivityDetailUpdatedState(activity));
     }
   }
 }
@@ -58,10 +34,11 @@ abstract class ActivityDetailState extends Equatable {
 
 class ActivityDetailInitialState extends ActivityDetailState {}
 
-class ActivityDetailShowLoadingState extends ActivityDetailState {}
+class ActivityDetailUpdatedState extends ActivityDetailState {
+  final Activity activity;
 
-class ActivityDetailHideLoadingState extends ActivityDetailState {}
+  ActivityDetailUpdatedState(this.activity);
 
-class ActivityDetailRegisterSuccessState extends ActivityDetailState {}
-
-class ActivityDetailRegisterErrorState extends ActivityDetailState {}
+  @override
+  List<Object> get props => [activity];
+}

@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liv_social/core/extension/date_extension.dart';
 import 'package:liv_social/core/extension/string_extension.dart';
 import 'package:liv_social/core/localization/keys.dart';
+import 'package:liv_social/core/navigation/routes.dart';
 import 'package:liv_social/core/theme/pallete_color.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/presentation/activity_detail/activity_detail_cubit.dart';
+import 'package:liv_social/features/presentation/activity_update/activity_update_view.dart';
 
 class ActivityDetailViewArgs {
   final Activity activity;
@@ -20,8 +22,9 @@ class ActivityDetailView extends StatelessWidget {
   static Widget create(BuildContext context, ActivityDetailViewArgs args) {
     return BlocProvider(
       create: (context) => ActivityDetailCubit(
-        context.read(),
         args.activity,
+        context.read(),
+        context.read(),
       ),
       child: const ActivityDetailView(),
     );
@@ -49,14 +52,15 @@ class _ActivityDetailsBody extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [
-                      Color(0xff833ab4),
-                      Color(0xfffd1d1d),
-                      Color(0xfffcb045),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    stops: [0, .35, 1]),
+                  colors: [
+                    Color(0xff833ab4),
+                    Color(0xfffd1d1d),
+                    Color(0xfffcb045),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0, .35, 1],
+                ),
               ),
               child: Stack(
                 children: [
@@ -98,14 +102,22 @@ class _ActivityCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             gradient: const LinearGradient(
-                colors: [
-                  Color(0xff020024),
-                  Color(0xff090979),
-                  Color(0xff00d4ff),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0, .65, 1]),
+              colors: [
+                Color(0xff020024),
+                Color(0xff090979),
+                Color(0xff00d4ff),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0, .65, 1],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.6),
+                blurRadius: 10,
+                spreadRadius: 1,
+              )
+            ],
             image: activity.image != null
                 ? DecorationImage(
                     image: NetworkImage(activity.image!), fit: BoxFit.contain)
@@ -130,6 +142,27 @@ class _ActivityCard extends StatelessWidget {
                 value: activity.details,
               ),
               _LocationField(address: activity.locationPlace.address),
+              _ActivityField(
+                fontSize: 10.0,
+                value: 'Created By: ${activity.ownerName}', // TODO : translate
+              ),
+              Visibility(
+                visible: bloc.isOwner,
+                child: Padding(
+                  padding: EdgeInsets.only(top: size.height * .1),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon: const Icon(Icons.edit,
+                          color: PalleteColor.actionButtonColor),
+                      onPressed: () => Navigator.of(context)
+                          .pushNamed(Routes.activityUpdate,
+                              arguments: ActivityUpdateViewArgs(activity))
+                          .then((response) => bloc.processUpdate(response)),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         );
@@ -153,7 +186,15 @@ class _ActivityField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(.5),
+              spreadRadius: 1,
+              blurRadius: 5),
+        ],
+      ),
       padding: const EdgeInsets.all(8.0),
       child: Text(value,
           maxLines: 3,

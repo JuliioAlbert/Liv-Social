@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:liv_social/features/domain/entities/activity.dart';
 
 abstract class ActivityRepository {
@@ -7,7 +5,7 @@ abstract class ActivityRepository {
 
   Future<Activity> getActivityById(String id);
 
-  Future<Activity> createActivity(Activity activity, File? image);
+  Future<Activity> createActivity(Activity activity);
 
   Future<bool> updateActivity(Activity activity);
 

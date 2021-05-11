@@ -13,11 +13,13 @@ import 'package:liv_social/features/domain/repositories/auth_repository.dart';
 import 'package:liv_social/features/domain/repositories/cloud_storage_repository.dart';
 import 'package:liv_social/features/domain/repositories/image_picker_repository.dart';
 import 'package:liv_social/features/domain/repositories/location_repository.dart';
+import 'package:liv_social/features/domain/usecases/create_activity_usecase.dart';
 import 'package:liv_social/features/domain/usecases/get_activities_usecase.dart';
 import 'package:liv_social/features/domain/usecases/get_location.dart';
 import 'package:liv_social/features/domain/usecases/login_usecase.dart';
 import 'package:liv_social/features/domain/usecases/logout_usecase.dart';
-import 'package:liv_social/features/domain/usecases/manage_activity_usecase.dart';
+import 'package:liv_social/features/domain/usecases/update_activity_usecase.dart';
+import 'package:liv_social/features/domain/usecases/upload_storage_usecase.dart';
 
 class DependencyInjection {
   const DependencyInjection._();
@@ -43,8 +45,7 @@ class DependencyInjection {
         create: (_) => CloudStorageRepositoryImpl(),
       ),
       RepositoryProvider<ActivityRepository>(
-        create: (context) =>
-            ActivityRepositoryImpl(fireStoreDatabase, context.read()),
+        create: (context) => ActivityRepositoryImpl(fireStoreDatabase),
       ),
       RepositoryProvider<LogOutUseCase>(
         create: (context) => LogOutUseCase(
@@ -62,8 +63,20 @@ class DependencyInjection {
           context.read(),
         ),
       ),
-      RepositoryProvider<ManageActivityUseCase>(
-        create: (context) => ManageActivityUseCase(
+      RepositoryProvider<UploadStorageUseCase>(
+        create: (context) => UploadStorageUseCase(
+          context.read(),
+        ),
+      ),
+      RepositoryProvider<CreateActivityUseCase>(
+        create: (context) => CreateActivityUseCase(
+          context.read(),
+          context.read(),
+        ),
+      ),
+      RepositoryProvider<UpdateActivityUseCase>(
+        create: (context) => UpdateActivityUseCase(
+          context.read(),
           context.read(),
         ),
       ),

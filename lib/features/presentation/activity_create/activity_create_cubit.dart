@@ -6,22 +6,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liv_social/features/data/models/place.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/domain/repositories/image_picker_repository.dart';
+import 'package:liv_social/features/domain/usecases/create_activity_usecase.dart';
 
 import 'package:liv_social/features/domain/usecases/login_usecase.dart';
-import 'package:liv_social/features/domain/usecases/manage_activity_usecase.dart';
 
-class ActivityFormCubit extends Cubit<ActivityFormState> {
-  ActivityFormCubit(
-    this._manageActivityUseCase,
+class ActivityCreateCubit extends Cubit<ActivityCreateState> {
+  ActivityCreateCubit(
+    this._createActivityUseCase,
     this._loginUseCase,
     this._imagePickerRepository,
   )   : now = DateTime.now(),
         lastDate = DateTime.now().add(const Duration(days: 60)),
-        super(ActivityFormInitialState()) {
-    ;
-  }
+        super(ActivityCreateInitialState());
 
-  final ManageActivityUseCase _manageActivityUseCase;
+  final CreateActivityUseCase _createActivityUseCase;
   final ImagePickerRepository _imagePickerRepository;
   final LoginUseCase _loginUseCase;
 
@@ -44,25 +42,26 @@ class ActivityFormCubit extends Cubit<ActivityFormState> {
 
   void createActivity() async {
     if (isFieldsValid()) {
-      emit(ActivityFormShowLoadingState());
+      emit(ActivityCreateShowLoadingState());
       try {
         final userSession = _loginUseCase.user!;
-        await _manageActivityUseCase.createActivity(
-            Activity(
-              userSession.uid,
-              userSession.name,
-              title,
-              subtitle,
-              details,
-              expectedDate,
-              locationPlace!,
-            ),
-            image);
-        emit(ActivityFormHideLoadingState());
-        emit(ActivityFormRegisterSuccessState());
+        await _createActivityUseCase.createActivity(
+          Activity(
+            userSession.uid,
+            userSession.name,
+            title,
+            subtitle,
+            details,
+            expectedDate,
+            locationPlace!,
+          ),
+          image,
+        );
+        emit(ActivityCreateHideLoadingState());
+        emit(ActivityCreateRegisterSuccessState());
       } catch (e) {
-        emit(ActivityFormHideLoadingState());
-        emit(ActivityFormRegisterErrorState());
+        emit(ActivityCreateHideLoadingState());
+        emit(ActivityCreateRegisterErrorState());
       }
     }
   }
@@ -85,7 +84,7 @@ class ActivityFormCubit extends Cubit<ActivityFormState> {
       expectedDate = null;
       time = null;
     }
-    emit(ActivityFormDateTimeUpdatedState(expectedDate));
+    emit(ActivityCreateDateTimeUpdatedState(expectedDate));
   }
 
   void updateLocationPlace(Place? place) {
@@ -93,68 +92,68 @@ class ActivityFormCubit extends Cubit<ActivityFormState> {
       try {
         locationPlace = LocationPlace(place.name, place.address,
             place.latLng.latitude, place.latLng.longitude);
-        emit(ActivityFormPlaceUpdateState(locationPlace!));
+        emit(ActivityCreatePlaceUpdateState(locationPlace!));
       } catch (e) {
-        emit(ActivityFormUpdatePlaceErrorState());
+        emit(ActivityCreateUpdatePlaceErrorState());
       }
     }
   }
 
   void pickImage() async {
     image = await _imagePickerRepository.pickImage();
-    emit(ActivityFormImageSelectedState(image));
+    emit(ActivityCreateImageSelectedState(image));
   }
 
   void exit() {
-    emit(ActivityFormInitialState());
-    emit(ActivityFormExitRequestState());
+    emit(ActivityCreateInitialState());
+    emit(ActivityCreateExitRequestState());
   }
 }
 
-abstract class ActivityFormState extends Equatable {
-  const ActivityFormState();
+abstract class ActivityCreateState extends Equatable {
+  const ActivityCreateState();
 
   @override
   List<Object?> get props => [];
 }
 
-class ActivityFormInitialState extends ActivityFormState {}
+class ActivityCreateInitialState extends ActivityCreateState {}
 
-class ActivityFormShowLoadingState extends ActivityFormState {}
+class ActivityCreateShowLoadingState extends ActivityCreateState {}
 
-class ActivityFormHideLoadingState extends ActivityFormState {}
+class ActivityCreateHideLoadingState extends ActivityCreateState {}
 
-class ActivityFormRegisterSuccessState extends ActivityFormState {}
+class ActivityCreateRegisterSuccessState extends ActivityCreateState {}
 
-class ActivityFormRegisterErrorState extends ActivityFormState {}
+class ActivityCreateRegisterErrorState extends ActivityCreateState {}
 
-class ActivityFormImageSelectedState extends ActivityFormState {
+class ActivityCreateImageSelectedState extends ActivityCreateState {
   final File? image;
 
-  ActivityFormImageSelectedState(this.image);
+  ActivityCreateImageSelectedState(this.image);
 
   @override
   List<Object?> get props => [image];
 }
 
-class ActivityFormDateTimeUpdatedState extends ActivityFormState {
+class ActivityCreateDateTimeUpdatedState extends ActivityCreateState {
   final DateTime? date;
 
-  ActivityFormDateTimeUpdatedState(this.date);
+  ActivityCreateDateTimeUpdatedState(this.date);
 
   @override
   List<Object?> get props => [date];
 }
 
-class ActivityFormPlaceUpdateState extends ActivityFormState {
+class ActivityCreatePlaceUpdateState extends ActivityCreateState {
   final LocationPlace place;
 
-  ActivityFormPlaceUpdateState(this.place);
+  ActivityCreatePlaceUpdateState(this.place);
 
   @override
   List<Object> get props => [place];
 }
 
-class ActivityFormUpdatePlaceErrorState extends ActivityFormState {}
+class ActivityCreateUpdatePlaceErrorState extends ActivityCreateState {}
 
-class ActivityFormExitRequestState extends ActivityFormState {}
+class ActivityCreateExitRequestState extends ActivityCreateState {}

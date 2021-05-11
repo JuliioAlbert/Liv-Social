@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:liv_social/features/presentation/activity_detail/activity_detail_view.dart';
-import 'package:liv_social/features/presentation/activity_form/activity_form_view.dart';
+import 'package:liv_social/features/presentation/activity_create/activity_create_view.dart';
+import 'package:liv_social/features/presentation/activity_update/activity_update_view.dart';
 import 'package:liv_social/features/presentation/home/home_view.dart';
 import 'package:liv_social/features/presentation/location/location_view.dart';
 import 'package:liv_social/features/presentation/login/login_view.dart';
@@ -11,8 +12,9 @@ class Routes {
   static const splash = '/';
   static const login = '/login';
   static const home = '/home';
+  static const activityCreate = '/activityForm';
   static const activityDetail = '/activityDetail';
-  static const activityForm = '/activityForm';
+  static const activityUpdate = '/activityUpdate';
   static const location = '/location';
 
   static Route routes(RouteSettings routeSettings) {
@@ -26,10 +28,12 @@ class Routes {
         return _buildRoute(LoginView.create);
       case home:
         return _buildRoute(HomeView.create);
+      case activityCreate:
+        return _buildRoute(ActivityCreateView.create);
       case activityDetail:
         return _buildRoute(ActivityDetailView.create, args);
-      case activityForm:
-        return _buildRoute(ActivityFormView.create);
+      case activityUpdate:
+        return _buildRoute(ActivityUpdateView.create, args);
       case location:
         return _buildRoute(LocationView.create);
       default:
