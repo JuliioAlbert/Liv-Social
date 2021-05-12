@@ -57,7 +57,7 @@ class _ActivityCard extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () => Navigator.of(context).pushNamed(Routes.activityDetail,
-              arguments: ActivityDetailViewArgs(activity)),
+              arguments: ActivityDetailViewArgs(activity, context.read())),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(

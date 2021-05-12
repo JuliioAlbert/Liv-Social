@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:liv_social/core/exceptions/activity_exception.dart';
+import 'package:liv_social/core/exceptions/cloud_storage_exception.dart';
 import 'package:liv_social/features/data/models/place.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/domain/entities/user_model.dart';
@@ -121,7 +123,6 @@ void main() {
       );
     });
     group('createActivity', () {
-      setUp(() {});
       blocTest<ActivityCreateCubit, ActivityCreateState>(
         'create activity without image and emit success events',
         build: () {
@@ -145,7 +146,7 @@ void main() {
       );
 
       blocTest<ActivityCreateCubit, ActivityCreateState>(
-        'create activity  with image and emit success events',
+        'create activity with image and emit success events',
         build: () {
           when(() => activityRepository.createActivity(any<Activity>()))
               .thenAnswer((_) => Future.value(activityFake));
@@ -168,6 +169,60 @@ void main() {
           ActivityCreateShowLoadingState(),
           ActivityCreateHideLoadingState(),
           ActivityCreateRegisterSuccessState(),
+        ],
+      );
+
+      blocTest<ActivityCreateCubit, ActivityCreateState>(
+        'create activity with image and throws UploadFileFailure exception',
+        build: () {
+          when(() => activityRepository.createActivity(any<Activity>()))
+              .thenAnswer((_) => Future.value(activityFake));
+          when(() =>
+                  cloudStorageRepository.uploadFile(any<File>(), any<String>()))
+              .thenThrow(UploadFileFailure());
+          uploadStorageUseCase = UploadStorageUseCase(cloudStorageRepository);
+          final activityCubit = ActivityCreateCubit(
+              createActivityUseCase, loginUseCase, imagePickerRepository);
+          activityCubit.title = activityFake.title;
+          activityCubit.subtitle = activityFake.subtitle;
+          activityCubit.details = activityFake.details;
+          activityCubit.expectedDate = activityFake.expectedDate;
+          activityCubit.locationPlace = activityFake.locationPlace;
+          activityCubit.image = fileFake;
+          return activityCubit;
+        },
+        act: (cubit) => cubit.createActivity(),
+        expect: () => <ActivityCreateState>[
+          ActivityCreateShowLoadingState(),
+          ActivityCreateHideLoadingState(),
+          ActivityCreateRegisterErrorState(),
+        ],
+      );
+
+      blocTest<ActivityCreateCubit, ActivityCreateState>(
+        'create activity with image and throws CreateActivityFailure exception',
+        build: () {
+          when(() => activityRepository.createActivity(any<Activity>()))
+              .thenThrow(CreateActivityFailure());
+          when(() =>
+                  cloudStorageRepository.uploadFile(any<File>(), any<String>()))
+              .thenAnswer((_) => Future.value('http://storage.com'));
+          uploadStorageUseCase = UploadStorageUseCase(cloudStorageRepository);
+          final activityCubit = ActivityCreateCubit(
+              createActivityUseCase, loginUseCase, imagePickerRepository);
+          activityCubit.title = activityFake.title;
+          activityCubit.subtitle = activityFake.subtitle;
+          activityCubit.details = activityFake.details;
+          activityCubit.expectedDate = activityFake.expectedDate;
+          activityCubit.locationPlace = activityFake.locationPlace;
+          activityCubit.image = fileFake;
+          return activityCubit;
+        },
+        act: (cubit) => cubit.createActivity(),
+        expect: () => <ActivityCreateState>[
+          ActivityCreateShowLoadingState(),
+          ActivityCreateHideLoadingState(),
+          ActivityCreateRegisterErrorState(),
         ],
       );
     });

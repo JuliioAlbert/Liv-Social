@@ -9,11 +9,16 @@ import 'package:liv_social/core/theme/pallete_color.dart';
 import 'package:liv_social/features/domain/entities/activity.dart';
 import 'package:liv_social/features/presentation/activity_detail/activity_detail_cubit.dart';
 import 'package:liv_social/features/presentation/activity_update/activity_update_view.dart';
+import 'package:liv_social/features/presentation/home/home_cubit.dart';
 
 class ActivityDetailViewArgs {
   final Activity activity;
+  final HomeCubit homeCubit;
 
-  ActivityDetailViewArgs(this.activity);
+  ActivityDetailViewArgs(
+    this.activity,
+    this.homeCubit,
+  );
 }
 
 class ActivityDetailView extends StatelessWidget {
@@ -24,7 +29,7 @@ class ActivityDetailView extends StatelessWidget {
       create: (context) => ActivityDetailCubit(
         args.activity,
         context.read(),
-        context.read(),
+        args.homeCubit,
       ),
       child: const ActivityDetailView(),
     );

@@ -64,6 +64,8 @@ class _ActivityCreateBody extends StatelessWidget {
             Navigator.of(context).pop();
           } else if (state is ActivityCreateRegisterSuccessState) {
             Navigator.of(context).pop(true);
+          } else if (state is ActivityCreateFillFieldsSuccessState) {
+            alertMessage(context, 'Complete', 'You must complete all fields');
           }
         },
         child: WillPopScope(

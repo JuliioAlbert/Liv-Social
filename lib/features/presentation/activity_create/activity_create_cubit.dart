@@ -63,6 +63,8 @@ class ActivityCreateCubit extends Cubit<ActivityCreateState> {
         emit(ActivityCreateHideLoadingState());
         emit(ActivityCreateRegisterErrorState());
       }
+    } else {
+      emit(ActivityCreateFillFieldsSuccessState());
     }
   }
 
@@ -127,6 +129,8 @@ class ActivityCreateShowLoadingState extends ActivityCreateState {}
 class ActivityCreateHideLoadingState extends ActivityCreateState {}
 
 class ActivityCreateRegisterSuccessState extends ActivityCreateState {}
+
+class ActivityCreateFillFieldsSuccessState extends ActivityCreateState {}
 
 class ActivityCreateRegisterErrorState extends ActivityCreateState {}
 

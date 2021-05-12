@@ -1,0 +1,17 @@
+{
+    "details": "Tour to various museums. Enjoy!!",
+    "expectedDate": "2021-05-14T09:18:00.000",
+    "image": "https://firebasestorage.googleapis.com/v0/b/liv-social.appspot.com/o/activity%2F7F9514nzqveH2S6waEgq8G0dAp73?alt=media&token=6e7cc4bc-4b3b-496d-a4ad-2f491d9ec777",
+    "locationPlace": {
+        "address": "Lima",
+        "latitude": -12.0463731,
+        "longitude": -77.042754,
+        "name": "Lima, Perú"
+    },
+    "ownerId": "7F9514nzqveH2S6waEgq8G0dAp73",
+    "ownerName": "Guillermo De La Cruz Onton",
+    "status": true,
+    "subtitle": "To spend an afternoon of exploration",
+    "title": "Meeting for tourism",
+    "uid": "d22b18c3-0bcd-4051-8dd3-584508e613fc"
+}
