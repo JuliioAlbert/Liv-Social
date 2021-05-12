@@ -38,7 +38,8 @@ class LoginUseCase {
         password: password,
       );
 
-      return await _accountRepository.findUserById(authUser.uid);
+      user = await _accountRepository.findUserById(authUser.uid);
+      return user!;
     } on UserNotExist {
       return await _accountRepository.registerUser(authUser!);
     }
