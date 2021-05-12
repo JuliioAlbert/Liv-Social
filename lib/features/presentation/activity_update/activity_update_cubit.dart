@@ -74,8 +74,11 @@ class ActivityUpdateCubit extends Cubit<ActivityUpdateState> {
   void updateLocationPlace(Place? place) {
     if (place != null) {
       try {
-        activity.locationPlace = LocationPlace(place.name, place.address,
-            place.latLng.latitude, place.latLng.longitude);
+        activity.locationPlace = LocationPlace(
+            name: place.name,
+            address: place.address,
+            latitude: place.latLng.latitude,
+            longitude: place.latLng.longitude);
         emit(ActivityUpdatePlaceUpdateState(activity.locationPlace));
       } catch (e) {
         emit(ActivityUpdateUpdatePlaceErrorState());

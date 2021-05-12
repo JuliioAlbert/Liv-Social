@@ -4,6 +4,8 @@ class LogInWithEmailAndPasswordFailure implements Exception {}
 
 class LogInWithGoogleFailure implements Exception {}
 
+class LogInGetCredentialFailure implements Exception {}
+
 class LogOutFailure implements Exception {}
 
 class NotAuthException implements Exception {}

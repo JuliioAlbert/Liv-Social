@@ -1,0 +1,16 @@
+{
+    "details": "A whole day of celebrations",
+    "expectedDate": "2021-05-12T04:18:00.000",
+    "image": "https://firebasestorage.googleapis.com/v0/b/liv-social.appspot.com/o/activity%2Fc-postedin-image-57673.jpeg?alt=media&token=654acc95-7fe9-45bd-894c-de725656bb9a",
+    "locationPlace": {
+        "address": "Playa Agua Dulce",
+        "latitude": -12.1612338,
+        "longitude": -77.0265804
+    },
+    "ownerId": "7F9514nzqveH2S6waEgq8G0dAp73",
+    "ownerName": "Guillermo De La Cruz Onton",
+    "status": true,
+    "subtitle": "To enjoy with the family",
+    "title": "Festival on the beach",
+    "uid": "310ba83d-a93f-4509-ade3-f76559c54d95"
+}

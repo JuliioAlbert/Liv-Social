@@ -47,13 +47,13 @@ class ActivityCreateCubit extends Cubit<ActivityCreateState> {
         final userSession = _loginUseCase.user!;
         await _createActivityUseCase.createActivity(
           Activity(
-            userSession.uid,
-            userSession.name,
-            title,
-            subtitle,
-            details,
-            expectedDate,
-            locationPlace!,
+            ownerId: userSession.uid,
+            ownerName: userSession.name,
+            title: title,
+            subtitle: subtitle,
+            details: details,
+            expectedDate: expectedDate,
+            locationPlace: locationPlace!,
           ),
           image,
         );
@@ -90,8 +90,11 @@ class ActivityCreateCubit extends Cubit<ActivityCreateState> {
   void updateLocationPlace(Place? place) {
     if (place != null) {
       try {
-        locationPlace = LocationPlace(place.name, place.address,
-            place.latLng.latitude, place.latLng.longitude);
+        locationPlace = LocationPlace(
+            name: place.name,
+            address: place.address,
+            latitude: place.latLng.latitude,
+            longitude: place.latLng.longitude);
         emit(ActivityCreatePlaceUpdateState(locationPlace!));
       } catch (e) {
         emit(ActivityCreateUpdatePlaceErrorState());

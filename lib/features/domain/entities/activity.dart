@@ -4,7 +4,7 @@ import 'package:liv_social/core/utils/utils.dart';
 
 part 'activity.g.dart';
 
-@JsonSerializable(anyMap: true, explicitToJson: true)
+@JsonSerializable(anyMap: true, explicitToJson: true, includeIfNull: false)
 class Activity {
   String? uid;
   late String ownerId;
@@ -16,17 +16,22 @@ class Activity {
   bool status = true;
   @JsonKey(fromJson: Utils.fromDateFormat)
   late DateTime? expectedDate;
-  LocationPlace locationPlace;
+  late LocationPlace locationPlace;
 
-  Activity(
-    this.ownerId,
-    this.ownerName,
-    this.title,
-    this.subtitle,
-    this.details,
+  Activity.empty();
+
+  Activity({
+    this.uid,
+    required this.ownerId,
+    required this.ownerName,
+    required this.title,
+    required this.subtitle,
+    required this.details,
+    this.image,
+    this.status = true,
     this.expectedDate,
-    this.locationPlace,
-  );
+    required this.locationPlace,
+  });
 
   factory Activity.fromJson(Map<String, dynamic> json) =>
       _$ActivityFromJson(json);
@@ -34,19 +39,19 @@ class Activity {
   Map<String, dynamic> toJson() => _$ActivityToJson(this);
 }
 
-@JsonSerializable(anyMap: true, explicitToJson: true)
+@JsonSerializable(anyMap: true, explicitToJson: true, includeIfNull: false)
 class LocationPlace {
   String? name;
   late String address;
   late double latitude;
   late double longitude;
 
-  LocationPlace(
+  LocationPlace({
     this.name,
-    this.address,
-    this.latitude,
-    this.longitude,
-  );
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+  });
 
   factory LocationPlace.fromJson(Map<String, dynamic> json) =>
       _$LocationPlaceFromJson(json);

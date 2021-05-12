@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserModel> signIn(AuthType authType,
       {String? email, String? password}) async {
     UserCredential? userCredential;
-    final user = UserModel();
+    final user = UserModel.empty();
 
     if (authType == AuthType.Email) {
       try {
@@ -73,7 +73,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return user;
     } else {
-      throw LogInWithEmailAndPasswordFailure();
+      throw LogInGetCredentialFailure();
     }
   }
 

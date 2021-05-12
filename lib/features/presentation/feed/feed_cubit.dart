@@ -35,6 +35,12 @@ class FeedCubit extends Cubit<FeedState> {
       emit(FeedActivitiesErrorState());
     }
   }
+
+  @override
+  Future<void> close() {
+    homeSubscription?.cancel();
+    return super.close();
+  }
 }
 
 abstract class FeedState extends Equatable {
