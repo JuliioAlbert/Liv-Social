@@ -57,4 +57,23 @@ class LocationPlace {
       _$LocationPlaceFromJson(json);
 
   Map<String, dynamic> toJson() => _$LocationPlaceToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is LocationPlace &&
+        other.name == name &&
+        other.address == address &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        address.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode;
+  }
 }

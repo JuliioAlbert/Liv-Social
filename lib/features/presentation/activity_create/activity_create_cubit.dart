@@ -102,7 +102,7 @@ class ActivityCreateCubit extends Cubit<ActivityCreateState> {
     }
   }
 
-  void pickImage() async {
+  Future<void> pickImage() async {
     image = await _imagePickerRepository.pickImage();
     emit(ActivityCreateImageSelectedState(image));
   }
